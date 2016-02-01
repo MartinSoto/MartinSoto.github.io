@@ -1,59 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+>
 <head>
-        <meta charset="utf-8" />
-        <title>Martin's Rants & Ramblings - General</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <title>General - Martin's Rants & Ramblings</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+
+
+    <meta name="author" content="Martín Soto" />
+    <meta name="keywords" content="General" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Martin's Rants & Ramblings" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Martin's Rants & Ramblings"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="Martin's Rants & Ramblings"/>
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.journal.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">Martin's Rants & Ramblings </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="/category/general.html">General</a></li>
-                    <li><a href="/category/software-architecture.html">Software Architecture</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Martin's Rants & Ramblings            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/general.html">General</a>
+                        </li>
+                        <li >
+                            <a href="/category/software-architecture.html">Software architecture</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/hello-everyone.html">Hello everyone!</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2015-02-08T00:00:00+01:00">
-                Published: So 08 Februar 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/martin-soto.html">Martín Soto</a>
-        </address>
-<p>In <a href="/category/general.html">General</a>. </p>
-
-</footer><!-- /.post-info --><p>This is the beginning of my blog about Web application development and
+            <article>
+                <h2><a href="/hello-everyone.html">Hello everyone!</a></h2>
+                <div class="summary"><p>This is the beginning of my blog about Web application development and
 architecture.</p>
-<p>Stay tuned!</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+<p>Stay tuned!</p>
 
-                            <li><a href="https://twitter.com/msotoweb">Twitter: @msotoweb</a></li>
-                            <li><a href="http://de.linkedin.com/pub/mart%C3%ADn-soto/0/a01/62a">LinkedIn</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+                    <a class="btn btn-default btn-xs" href="/hello-everyone.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://twitter.com/msotoweb"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="http://de.linkedin.com/pub/mart%C3%ADn-soto/0/a01/62a"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a></li>
+                <li class="list-group-item"><a href="https://github.com/MartinSoto?tab=repositories"><i class="fa fa-github-square fa-lg"></i> GitHub</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                </ul>
+            </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Martín Soto
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
 
 </body>
 </html>

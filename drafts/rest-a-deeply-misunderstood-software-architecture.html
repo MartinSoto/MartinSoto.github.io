@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>REST: A Deeply Misunderstood Software Architecture - Martin's Rants & Ramblings</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/drafts/rest-a-deeply-misunderstood-software-architecture.html">
+
+        <meta name="author" content="Martín Soto" />
+        <meta name="description" content="A few weeks ago, I gave a talk at the Berlin Software Architecture MeetUp group, with a title similar to the one I&#39;m giving this post. The slides are published, but they are really presentation material (I don&#39;t like pasting lots of text on every slide) so they ..." />
+
+        <meta property="og:site_name" content="Martin's Rants & Ramblings" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="REST: A Deeply Misunderstood Software Architecture"/>
+        <meta property="og:url" content="/drafts/rest-a-deeply-misunderstood-software-architecture.html"/>
+        <meta property="og:description" content="A few weeks ago, I gave a talk at the Berlin Software Architecture MeetUp group, with a title similar to the one I&#39;m giving this post. The slides are published, but they are really presentation material (I don&#39;t like pasting lots of text on every slide) so they ..."/>
+        <meta property="article:published_time" content="2015-03-17" />
+            <meta property="article:section" content="Software Architecture" />
+            <meta property="article:author" content="Martín Soto" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.journal.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Martin's Rants & Ramblings            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/general.html">General</a>
+                        </li>
+                        <li class="active">
+                            <a href="/category/software-architecture.html">Software architecture</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/drafts/rest-a-deeply-misunderstood-software-architecture.html"
+                       rel="bookmark"
+                       title="Permalink to REST: A Deeply Misunderstood Software Architecture">
+                        REST: A Deeply Misunderstood Software Architecture
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-03-17T00:00:00+01:00"> Di 17 März 2015</time>
+    </span>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>A few weeks ago, I gave a talk at the Berlin Software Architecture
+MeetUp group, with a title similar to the one I'm giving this
+post. The slides are published, but they are really presentation
+material (I don't like pasting lots of text on every slide) so they
+are far from telling the whole story. In a series of posts starting
+with this one, I will try to tell that story, and to complement it
+with additional material and ideas.</p>
+<div class="section" id="the-everyday-experience-of-rest">
+<h2>The everyday experience of REST</h2>
+<p>REST stands for REpresentational State Transfer, which, apart from
+being a mouthful, is far from telling us what the thing is all
+about. Most people have heard of REST in the context of service APIs
+on the modern Internet: cool startups and established companies alike,
+keep touting the fact that their products feature a &quot;convenient REST
+API.</p>
+<p>What they mean exactly by that is often far from clear. Typically, it
+means that you will use HTTP to access the API, that the20 documentation
+will contain instructions for you to build URLs, and that you will
+call these URLs often using unusual HTTP methods such as PUT and
+DELETE.</p>
+<p>This is, however, far from the actual definition of REST (and yes,
+there is a definition!). REST was defined by a guy who undoubtly
+belongs to the founders of the World Wide Web: Roy Fielding. In
+his doctoral dissertation, published in year 2000, Fielding defined
+the REST architectural style based on his and other people's
+experience building the World Wide Web. Basically, his idea was to
+distill the aspects of the Web that make it so enormously scalable and
+resilient into an abstract architectural style that could be applied
+to other types of applications.</p>
+<p>The interesting part is that, as common or popular as the REST/RESTful
+denomination might be, very few of the industrial APIs that proudly
+advertise themselves as being REST actually fit Fielding's
+definition. This is, of course, not a crime (if a misrepresentation
+of terms) and in fact, embracing only some of the REST constraints or
+none at all can be the best option for many systems.</p>
+<p>However, as I said before, REST is an abstraction of the WWW itself,
+and, as such, is intended to make systems that are potentially as
+scalable, resilient, and evolvable as the Web itself. What I'll try to
+do in this and the following posts is to show you what these many
+not-so-RESTful industrial APIs are missing, what it really takes to
+build a RESTful system/API (hint “hypermedia” is the keyword here) and
+why this can result in APIs that are more extensible, evolvable, and
+scalable than most current HTTP-based APIs.</p>
+</div>
+<div class="section" id="the-rest-maturity-model">
+<h2>The REST &quot;maturity model&quot;</h2>
+<p>One useful way to look at current APIs, and to relate them to the real
+(or, if you want, ideal) definition of REST is the so-called REST
+Maturity Model proposed by Leonard Richardson and discussed in an
+<a class="reference external" href="http://martinfowler.com/articles/richardsonMaturityModel.html">excellent blog post</a> by
+Martin Fowler.</p>
+<p>Here is an adaptation of the illustration depicting the model in
+Fowler's post:</p>
+<p>[Maturity model illustration]</p>
+<ul class="simple">
+<li>Level 0: Plain old RPC (Example: Amazon EC2 API, XML-RPC, SOAP)</li>
+<li>Level 1: Resources</li>
+<li>Level 2: HTTP verbs (Examples: Amazon S3, Google Calendar, many,
+many, more)</li>
+<li>Level 3: Hypermedia controls (The WWW!), new PayPal, Nike,
+GitHub and others.)</li>
+</ul>
+<p>One important caveat is that the title &quot;Maturity Model&quot; is a bit
+misleading, as it suggests that APIs (or generally, software systems)
+fitting to any of the lower levels, are REST but somehow to a lesser
+degree than APIs fitting the higher levels. In fact, only Level 3 in
+this model corresponds to the actual definition of REST. The remaining
+levels are still useful, though, because they often describe practical
+systems and thus can be used to determine how close a real system is
+to being really RESTful.</p>
+<p>In the following sections (and blog posts) I will cover these levels
+in some detail, including, where possible, examples based on real,
+well-known APIs. I will rely on the progression of the maturity levels
+to introduce the basic aspects comprising a REST API. Afterwards, I'll
+go into more detail on Level 3 (real REST) including some examples to
+illustrate the potential benefits of building APIs at this level.</p>
+<p>But before getting there, let's start at the beginning: Maturity
+level 0.</p>
+</div>
+<div class="section" id="level-0-plain-old-rpc">
+<h2>Level 0: Plain old RPC</h2>
+<p>At least the older programmers around must be familiar with
+traditional Remote Procedure Call (RPC) systems, such as CORBA and
+DCOM, and (later) Java RMI. These systems were all the rage in the
+1990s, so it’s no surprise that people tried to mimic their operation
+when they designed the first Web-based APIs in the late 90s and early
+2000s.</p>
+<p>For those who never heard of it, RPC is about calling procedures
+through the network. Let's first take a look at a regular procedure
+call:</p>
+<p>[Procedure call illustration]</p>
+<p>The main characteristic of procedure calls, as illustrated by the
+diagram above, is that the calling program waits for the called
+procedure to complete. Once the procedure call completes and the
+return value has been transfered back to the caller, the caller
+continues its execution.</p>
+<p>Remote Procedure Call systems try to keep this type of behavior, with
+the difference that the caller and the callee are two separate
+processes connected through a network in a typical client/server
+arrangement:</p>
+<div class="figure">
+<object data="/images/REST-Misunderstood_002-RPC.svg" type="image/svg+xml">
+</object>
+</div>
+<p>For each remote procedure call, the caller sends a message with
+the procedure name and parameters, the server receives it, runs the
+procedure with the given parameters, and sends a message back to the
+client with the procedure's return value.</p>
+<p>Many Web-based APIs created in the early 2000s would only use the HTTP
+protocol as a transport mechanism for remote procedure calls. Let me
+show you an example that I find very illustrative, the Amazon Elastic
+Computing Cloud (EC2) API:
+<a class="reference external" href="http://www.google.com/url?q=http%3A%2F%2Fdocs.aws.amazon.com%2FAWSEC2%2Flatest%2FAPIReference%2FQuery-Requests.html&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNGLSfKD0P-mhS4GTAtXJNg3629DuA">http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html</a></p>
+<pre class="code literal-block">
+https://ec2.amazonaws.com/?Action=RunInstances
+&amp;ImageId=ami-2bb65342
+&amp;MaxCount=3
+&amp;MinCount=1
+&amp;Placement.AvailabilityZone=us-east-1a
+&amp;Monitoring.Enabled=true
+&amp;Version=2014-10-01
+&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256
+&amp;X-Amz-Credential=AKIAIOSFODNN7EXAMPLEus-east-1%2Fec2%2Faws4_request
+&amp;X-Amz-Date=20130813T150206Z
+&amp;X-Amz-SignedHeaders=content-type%3host%3x-amz-date
+&amp;X-Amz-Signature=ced6826de92d2bdeed8f846f0bf508e8559e98e4b0194b84example54174deb456c
+Content-type: application/json
+host:ec2.amazonaws.com
+</pre>
+<p>As you may know, the EC2 API is the one you use to create, destroy and
+administer virtual machines in Amazon's enormously popular cloud
+computing service.  EC2 uses GET requests for everything. A single,
+entry point URL is used for all requests, and both the operation name
+and its parameters, including identifiers for all affected objects,
+are passed as part of the query string. Although this is simple (and
+convenient, this API can be called by entering the URLs into a
+browser’s address bar) it mostly misses the point, and skips most of
+the advantages, of the HTTP protocol, as we will soon see.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://twitter.com/msotoweb"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="http://de.linkedin.com/pub/mart%C3%ADn-soto/0/a01/62a"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a></li>
+                <li class="list-group-item"><a href="https://github.com/MartinSoto?tab=repositories"><i class="fa fa-github-square fa-lg"></i> GitHub</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                </ul>
+            </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Martín Soto
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>
